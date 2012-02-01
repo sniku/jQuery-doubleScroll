@@ -37,11 +37,6 @@
             else{
                 var content_element = $(this.element).children(':eq(0)');
             }
-            console.log(content_element);
-            console.log(self.options.content_element);
-            console.log($(self.element).find(self.options.content_element));
-            console.log(self);
-
 
             // bind upper scroll to bottom scroll
             $(".scroll-wrapper").scroll(function(){
