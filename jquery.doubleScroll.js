@@ -29,8 +29,9 @@
 
             // add div that will act as an upper scroll
             $(this.element).before('<div class="scroll-wrapper" style="height: 20px;"><div class="scroll" style="height: 20px;"></div></div>');
+            var top_scroll = $(this.element).prev();
 
-
+            // find the content element (should be the widest one)
             if($(self.element).find(self.options.content_element).length!=0){
                 var content_element = $(self.element).find(self.options.content_element);
             }
@@ -39,12 +40,12 @@
             }
 
             // bind upper scroll to bottom scroll
-            $(".scroll-wrapper").scroll(function(){
-                $(self.element).scrollLeft($(".scroll-wrapper").scrollLeft());
+            top_scroll.scroll(function(){
+                $(self.element).scrollLeft(top_scroll.scrollLeft());
             });
             // bind bottom scroll to upper scroll
             $(this.element).scroll(function(){
-                $(".scroll-wrapper").scrollLeft($(self.element).scrollLeft());
+                top_scroll.scrollLeft($(self.element).scrollLeft());
             });
 
             // apply css
@@ -57,7 +58,7 @@
             $('.scroll-wrapper').width((this.element).width());
         },
         options: {
-            content_element: undefined // $('widest-element-in-the-wrapper')
+            content_element: undefined // widest-element-in-the-wrapper
         }
     });
 })(jQuery);
