@@ -4,61 +4,61 @@
  * @requires jQuery, jQueryUI
  *
  * @author Pawel Suwala - http://suwala.eu/
- * @version 0.1  (01-02-2012)
+ * @version 0.2 (07-06-2012)
  *
  * Dual licensed under the MIT and GPL licenses:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  */
-
+ 
 (function($){
-    $.widget("ui.doubleScroll", {
-        _init : function() {
+    $.widget("suwala.doubleScroll", {
+		options: {
+            contentElement: undefined, // Widest element, if not specified first child element will be used
+			topScrollBarMarkup: '<div class="suwala-doubleScroll-scroll-wrapper" style="height: 20px;"><div class="suwala-doubleScroll-scroll" style="height: 20px;"></div></div>',
+			topScrollBarInnerSelector: '.suwala-doubleScroll-scroll',			
+			scrollCss: {                
+				'overflow-x': 'scroll',
+				'overflow-y':'hidden'
+            },
+			contentCss: {
+				'overflow-x': 'scroll',
+				'overflow-y':'hidden'
+			}
+        },		
+        _create : function() {
             var self = this;
-
-            var scroll_wrapper_css = {
-                'border': 'none 0px RED',
-                'overflow-x': 'scroll',
-                'overflow-y':'hidden'
-            }
-            var content_wrapper_css = {
-                'border': 'none 0px RED',
-                'overflow-x': 'scroll',
-                'overflow-y':'hidden'
-            }
+			var contentElement;
 
             // add div that will act as an upper scroll
-            $(this.element).before('<div class="scroll-wrapper" style="height: 20px;"><div class="scroll" style="height: 20px;"></div></div>');
-            var top_scroll = $(this.element).prev();
+			var topScrollBar = $($(self.options.topScrollBarMarkup));
+            self.element.before(topScrollBar);
 
-            // find the content element (should be the widest one)
-            if($(self.element).find(self.options.content_element).length!=0){
-                var content_element = $(self.element).find(self.options.content_element);
+            // find the content element (should be the widest one)			
+            if (self.options.contentElement !== undefined && self.element.find(self.options.contentElement).length !== 0) {
+                contentElement = self.element.find(self.options.contentElement);
             }
-            else{
-                var content_element = $(this.element).children(':eq(0)');
+            else {
+                contentElement = self.element.find('>:first-child');
             }
 
             // bind upper scroll to bottom scroll
-            top_scroll.scroll(function(){
-                $(self.element).scrollLeft(top_scroll.scrollLeft());
+            topScrollBar.scroll(function(){
+                self.element.scrollLeft(topScrollBar.scrollLeft());
             });
+			
             // bind bottom scroll to upper scroll
-            $(this.element).scroll(function(){
-                top_scroll.scrollLeft($(self.element).scrollLeft());
+            self.element.scroll(function(){
+                topScrollBar.scrollLeft(self.element.scrollLeft());
             });
 
             // apply css
-            $('.scroll-wrapper').css(scroll_wrapper_css);
-            $(this.element).css(content_wrapper_css);
+            topScrollBar.css(self.options.scrollCss);
+            self.element.css(self.options.contentCss);
 
             // set the width of the wrappers
-            var width = $(content_element).outerWidth();
-            $(".scroll").width(width);
-            $('.scroll-wrapper').width((this.element).width());
-        },
-        options: {
-            content_element: undefined // widest-element-in-the-wrapper
+            $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement.outerWidth());
+            topScrollBar.width(self.element.width());
         }
     });
 })(jQuery);
