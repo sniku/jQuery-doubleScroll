@@ -4,7 +4,7 @@
  * @requires jQuery, jQueryUI
  *
  * @author Pawel Suwala - http://suwala.eu/
- * @version 0.2 (07-06-2012)
+ * @version 0.3 (12-03-2014)
  *
  * Dual licensed under the MIT and GPL licenses:
  * http://www.opensource.org/licenses/mit-license.php
@@ -55,6 +55,25 @@
             // apply css
             topScrollBar.css(self.options.scrollCss);
             self.element.css(self.options.contentCss);
+
+            // set the width of the wrappers
+            $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement.outerWidth());
+            topScrollBar.width(self.element.width());
+        },
+        refresh: function(){
+            // this should be called if the content of the inner element changed.
+            // i.e. After AJAX data load
+            var self = this;
+			var contentElement;
+            var topScrollBar = self.element.parent().find('.suwala-doubleScroll-scroll-wrapper');
+
+            // find the content element (should be the widest one)
+            if (self.options.contentElement !== undefined && self.element.find(self.options.contentElement).length !== 0) {
+                contentElement = self.element.find(self.options.contentElement);
+            }
+            else {
+                contentElement = self.element.find('>:first-child');
+            }
 
             // set the width of the wrappers
             $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement.outerWidth());
