@@ -57,8 +57,8 @@
             self.element.css(self.options.contentCss);
 
             // set the width of the wrappers
-            $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement.outerWidth());
-            topScrollBar.width(self.element.width());
+            $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement[0].scrollWidth);
+            topScrollBar.width(self.element[0].clientWidth);
         },
         refresh: function(){
             // this should be called if the content of the inner element changed.
@@ -76,8 +76,8 @@
             }
 
             // set the width of the wrappers
-            $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement.outerWidth());
-            topScrollBar.width(self.element.width());
+            $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement[0].scrollWidth);
+            topScrollBar.width(self.element[0].clientWidth);
         }
     });
 })(jQuery);
