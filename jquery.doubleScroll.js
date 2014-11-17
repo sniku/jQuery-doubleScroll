@@ -10,28 +10,28 @@
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  */
- 
-(function($){
+
+(function ($) {
     $.widget("suwala.doubleScroll", {
-		options: {
+        options: {
             contentElement: undefined, // Widest element, if not specified first child element will be used
-			topScrollBarMarkup: '<div class="suwala-doubleScroll-scroll-wrapper" style="height: 20px;"><div class="suwala-doubleScroll-scroll" style="height: 20px;"></div></div>',
-			topScrollBarInnerSelector: '.suwala-doubleScroll-scroll',			
-			scrollCss: {                
-				'overflow-x': 'scroll',
-				'overflow-y':'hidden'
+            topScrollBarMarkup: '<div class="suwala-doubleScroll-scroll-wrapper" style="height: 20px;"><div class="suwala-doubleScroll-scroll" style="height: 20px;"></div></div>',
+            topScrollBarInnerSelector: '.suwala-doubleScroll-scroll',
+            scrollCss: {
+                'overflow-x': 'scroll',
+                'overflow-y': 'hidden'
             },
-			contentCss: {
-				'overflow-x': 'scroll',
-				'overflow-y':'hidden'
-			}
-        },		
-        _create : function() {
+            contentCss: {
+                'overflow-x': 'scroll',
+                'overflow-y': 'hidden'
+            }
+        },
+        _create: function () {
             var self = this;
-			var contentElement;
+            var contentElement;
 
             // add div that will act as an upper scroll
-			var topScrollBar = $($(self.options.topScrollBarMarkup));
+            var topScrollBar = $($(self.options.topScrollBarMarkup));
             self.element.before(topScrollBar);
 
             // find the content element (should be the widest one)			
@@ -43,12 +43,12 @@
             }
 
             // bind upper scroll to bottom scroll
-            topScrollBar.scroll(function(){
+            topScrollBar.scroll(function () {
                 self.element.scrollLeft(topScrollBar.scrollLeft());
             });
-			
+
             // bind bottom scroll to upper scroll
-            self.element.scroll(function(){
+            self.element.scroll(function () {
                 topScrollBar.scrollLeft(self.element.scrollLeft());
             });
 
@@ -60,11 +60,11 @@
             $(self.options.topScrollBarInnerSelector, topScrollBar).width(contentElement[0].scrollWidth);
             topScrollBar.width(self.element[0].clientWidth);
         },
-        refresh: function(){
+        refresh: function () {
             // this should be called if the content of the inner element changed.
             // i.e. After AJAX data load
             var self = this;
-			var contentElement;
+            var contentElement;
             var topScrollBar = self.element.parent().find('.suwala-doubleScroll-scroll-wrapper');
 
             // find the content element (should be the widest one)
