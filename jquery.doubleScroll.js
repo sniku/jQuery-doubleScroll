@@ -11,7 +11,15 @@
  * http://www.gnu.org/licenses/gpl.html
  */
 
-(function ($) {
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
     $.widget("suwala.doubleScroll", {
         options: {
             contentElement: undefined, // Widest element, if not specified first child element will be used
@@ -80,4 +88,4 @@
             topScrollBar.width(self.element[0].clientWidth);
         }
     });
-})(jQuery);
+}));
